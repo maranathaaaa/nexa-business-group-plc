@@ -272,19 +272,19 @@ export const SERVICE_CAPABILITIES: ServiceCapability[] = [
     title: 'Build',
     titleAm: 'መገንባት (Build)',
     description:
-      'We establish solid foundations for new ventures, brands, and digital infrastructures from initial concept to commercial launch.',
+      'We architect resilient business frameworks, launch compelling brands, and deploy robust digital infrastructures taking ventures seamlessly from initial concept to commercial market dominance.',
     descriptionAm:
-      'ለአዳዲስ ንግዶች፣ ብራንዶች እና ዲጂታል መሠረተ ልማቶች ከሃሳብ ጀምሮ እስከ ገበያ ድረስ ጠንካራ መሠረት እንገነባለን።',
+      'አዳዲስ የንግድ ስራዎችን፣ ተፅዕኖ ፈጣሪ ብራንዶችን እና አስተማማኝ የዲጂታል መሰረተ-ልማቶችን እንገነባለን፤ ሀሳብን ከመንደፍ ጀምሮ በገበያው ውስጥ በስኬት እስከመሰማራት ድረስ ሙሉ ሀላፊነት እንወስዳለን።',
     iconName: 'Hammer',
-  },
+  },                                                                                                          
   {
     id: 'transform',
     title: 'Transform',
     titleAm: 'ማሻሻል እና መለወጥ (Transform)',
     description:
-      'We modernize legacy business models, operations, and brand positioning to thrive in fast-evolving corporate environments.',
+      'We revitalize legacy business architectures, streamline operational workflows, and reposition brands to ensure long-term agility and competitiveness in fast-evolving global markets.',
     descriptionAm:
-      'ድርጅቶች በዘመናዊው የንግድ ዓለም ተወዳዳሪ ሆነው እንዲቀጥሉ የአሰራር ዘዴያቸውን እና አደረጃጀታቸውን እናሻሽላለን።',
+      'ነባር የንግድ አሰራሮችን እና የአደረጃጀት ስርዓቶችን በማዘመን፣ የስራ ሂደቶችን በማቃለል እና የብራንድ አቀማመጥን በማስተካከል ድርጅቶች በፍጥነት በሚቀያየሩ አለምአቀፍ ገበያዎች ውስጥ ዘላቂ ተወዳዳሪ እንዲሆኑ እናደርጋለን።',
     iconName: 'RefreshCw',
   },
   {
@@ -292,9 +292,9 @@ export const SERVICE_CAPABILITIES: ServiceCapability[] = [
     title: 'Digitize',
     titleAm: 'ዲጂታላይዝ ማድረግ (Digitize)',
     description:
-      'We implement enterprise software, AI-assisted workflows, and automated cloud platforms to boost speed and accuracy.',
+      'We drive enterprise agility by integrating advanced software platforms, AI-assisted operational workflows, and scalable cloud ecosystems that eliminate friction and maximize execution speed.',
     descriptionAm:
-      'ቅልጥፍናን እና ትክክለኛነትን ለማሳደግ ዘመናዊ ሶፍትዌሮችን፣ ሰው ሰራሽ አስተውሎት (AI) እና አውቶማቲክ ስርዓቶችን እንተገብራለን።',
+      'ዘመናዊ የሶፍትዌር ሲስተሞችን፣ በሰው ሰራሽ አስተውሎት (AI) የታገዙ የአሰራር መንገዶችን እና (Cloud) ቴክኖሎጂዎችን በመተግበር የድርጅትዎን የስራ ፍጥነት እና ጥራት እናሳድጋለን',
     iconName: 'Laptop',
   },
   {
@@ -302,9 +302,9 @@ export const SERVICE_CAPABILITIES: ServiceCapability[] = [
     title: 'Grow',
     titleAm: 'ማሳደግ (Grow)',
     description:
-      'We drive quantifiable market share expansion through data-driven campaigns, brand activation, and high-conversion sales support.',
+      'We capture market share and maximize ROI using high-impact brand activations, data-driven marketing campaigns, and high-conversion commercial strategies.',
     descriptionAm:
-      'በመረጃ ላይ በተመሰረቱ የዘመቻ ስራዎች፣ በብራንድ ማስተዋወቅ እና በሽያጭ ድጋፍ የድርጅትን የገበያ ድርሻ እናሳድጋለን።',
+      'በመረጃ በተደገፉ የማርኬቲንግ እንቅስቃሴዎች፣ ውጤታማ የብራንድ ማስተዋወቂያዎች እና ከፍተኛ የሽያጭ ስልቶች አማካኝነት የድርጅትዎን የገበያ ድርሻ እና የትርፍ መጠን እንጨምራለን።',
     iconName: 'TrendingUp',
   },
   {
@@ -312,9 +312,9 @@ export const SERVICE_CAPABILITIES: ServiceCapability[] = [
     title: 'Expand',
     titleAm: 'ማስፋፋት (Expand)',
     description:
-      'We open doors to international territories, cross-border trade, and strategic partnerships across East Africa and the UAE.',
+      'Leveraging our presence in East Africa and the UAE, we unlock cross-border trade, establish high-value international partnerships, and guide businesses into lucrative foreign territories.',
     descriptionAm:
-      'በምስራቅ አፍሪካ እና በተባበሩት አረብ ኤምሬትስ (UAE) ዓለም አቀፍ የንግድ እድሎችን እና ስትራቴጂያዊ አጋርነቶችን እንከፍታለን።',
+      'ምስራቅ አፍሪካ እና የተባበሩት አረብ ኤምሬትስ (UAE) ውስጥ ያለንን ተደራሽነት በመጠቀም ድበር ተሻጋሪ የንግድ እድሎችን እንከፍታለን፤ ዘላቂ የውጭ ሀገር አጋርነቶችን በመፍጠር ድርጅትዎን ወደ አዳዲስ አለምአቀፍ ገበያዎች እናሸጋግራለን።',
     iconName: 'Globe',
   },
 ];

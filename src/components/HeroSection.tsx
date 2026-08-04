@@ -129,7 +129,7 @@ export const HeroSection: React.FC = () => {
                 {/* City image replacing the building animation */}
                 <div className="w-full aspect-[4/3] rounded-2xl relative overflow-hidden border border-[#0D47A1]/20 bg-slate-900">
                   <img
-                    src={new URL('../../assets/city.jpg', import.meta.url).href}
+                    src={new URL('../../assets/city1.jpg', import.meta.url).href}
                     alt="Addis Ababa city skyline"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
