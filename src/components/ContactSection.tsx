@@ -46,6 +46,21 @@ export const ContactSection: React.FC = () => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.email) return;
+
+    const subject = encodeURIComponent(`Service Request: ${formData.service}`);
+    const body = encodeURIComponent(
+      [
+        `Name / Company: ${formData.name}`,
+        `Email: ${formData.email}`,
+        `Phone: ${formData.phone || 'Not provided'}`,
+        `Requested Service: ${formData.service}`,
+        '',
+        `Message:`,
+        formData.message || 'No additional message',
+      ].join('\n')
+    );
+
+    window.location.href = `mailto:${CONTACT_INFO.email}?subject=${subject}&body=${body}`;
     setFormSubmitted(true);
   };
 
