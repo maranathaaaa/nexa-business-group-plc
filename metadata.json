@@ -1,0 +1,6 @@
+{
+  "name": "Nexa Business Group PLC",
+  "description": "Premium corporate website for Nexa Business Group PLC featuring bilingual English and Amharic support, interactive journey timeline, corporate divisions, and WCAG accessible design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
