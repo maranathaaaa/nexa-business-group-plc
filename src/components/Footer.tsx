@@ -154,8 +154,6 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-        =
-
           </div>
         </div>
       </div>
