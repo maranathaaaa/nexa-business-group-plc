@@ -419,7 +419,6 @@ export const CONTACT_INFO = {
   officeHoursEn: 'Monday – Saturday: 8:30 AM – 5:30 PM (East Africa Time)',
   officeHoursAm: 'ከሰኞ – አርብ፡ ከጧቱ 2:30 – ከቀኑ 11:30 (በኢትዮጵያ ሰዓት አቆጣጠር)',
   socialLinks: {
-    facebook: 'https://facebook.com',
     linkedin: 'https://www.linkedin.com/company/nexa-business-group/',
     telegram: 'https://t.me/nexafz',
     whatsapp: 'https://wa.me/251911984806',

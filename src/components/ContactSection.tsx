@@ -18,7 +18,6 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import { CONTACT_INFO } from '../data/content';
 import {
-  FacebookLogo,
   LinkedInLogo,
   TelegramLogo,
   WhatsAppLogo,
@@ -186,17 +185,6 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={CONTACT_INFO.socialLinks.facebook}
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Facebook"
-                  aria-label="Facebook"
-                  className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white hover:bg-[#1877F2] text-[#1877F2] hover:text-white border border-slate-200 transition-all shadow-xs hover:shadow-md"
-                >
-                  <FacebookLogo className="w-7 h-7" />
-                </a>
-
                 <a
                   href={CONTACT_INFO.socialLinks.linkedin}
                   target="_blank"
