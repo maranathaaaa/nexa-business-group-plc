@@ -129,14 +129,13 @@ export const HeroSection: React.FC = () => {
                 {/* City image replacing the building animation */}
                 <div className="w-full aspect-[4/3] rounded-2xl relative overflow-hidden border border-[#0D47A1]/20 bg-slate-900">
                   <img
-                    src={new URL('../../assets/city1.jpg', import.meta.url).href}
+                    src={new URL('../../assets/city1.png', import.meta.url).href}
                     alt="Addis Ababa city skyline"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/30"></div>
                   <div className="relative z-10 p-4 h-full flex flex-col justify-between">
                     <div className="flex items-center justify-between text-white/80 text-xs tracking-[0.18em] uppercase">
-                      <span>Addis Ababa</span>
+                     
                     </div>
                   </div>
                 </div>
