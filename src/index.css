@@ -37,6 +37,16 @@
   background: #0D47A1;
 }
 
+/* Hide scrollbar while keeping native scrolling (used by gallery carousel) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Accessibility font scale modifier classes */
 body.font-size-lg {
   font-size: 112.5%;

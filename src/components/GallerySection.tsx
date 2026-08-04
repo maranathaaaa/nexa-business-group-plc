@@ -47,12 +47,15 @@ export const GallerySection: React.FC = () => {
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!carouselRef.current) return;
-    setIsDragging(true);
+    const el = carouselRef.current;
+    if (!el) return;
     setIsPaused(true);
     dragStart.current = event.clientX;
-    scrollStart.current = carouselRef.current.scrollLeft;
-    carouselRef.current.setPointerCapture(event.pointerId);
+    scrollStart.current = el.scrollLeft;
+    if (event.pointerType === 'mouse') {
+      setIsDragging(true);
+      el.setPointerCapture(event.pointerId);
+    }
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -64,7 +67,7 @@ export const GallerySection: React.FC = () => {
   const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(false);
     setIsPaused(false);
-    if (carouselRef.current) {
+    if (event.pointerType === 'mouse' && carouselRef.current) {
       carouselRef.current.releasePointerCapture(event.pointerId);
     }
   };
@@ -85,22 +88,22 @@ export const GallerySection: React.FC = () => {
         </div>
 
         <div className="mt-10 relative">
-          <div className="absolute -left-2 top-1/2 z-10 hidden sm:flex -translate-y-1/2">
+          <div className="absolute left-2 sm:-left-2 top-1/2 z-20 flex -translate-y-1/2">
             <button
               type="button"
               aria-label="Scroll gallery left"
               onClick={() => scrollByOffset(-320)}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-slate-700 shadow-md transition hover:bg-slate-100"
+              className="inline-flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
             >
               ‹
             </button>
           </div>
-          <div className="absolute -right-2 top-1/2 z-10 hidden sm:flex -translate-y-1/2">
+          <div className="absolute right-2 sm:-right-2 top-1/2 z-20 flex -translate-y-1/2">
             <button
               type="button"
               aria-label="Scroll gallery right"
               onClick={() => scrollByOffset(320)}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-slate-700 shadow-md transition hover:bg-slate-100"
+              className="inline-flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
             >
               ›
             </button>
@@ -109,7 +112,6 @@ export const GallerySection: React.FC = () => {
           <div
             ref={carouselRef}
             className="no-scrollbar mt-6 flex gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
-            style={{ touchAction: 'pan-y' }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}

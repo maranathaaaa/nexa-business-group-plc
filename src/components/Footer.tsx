@@ -124,7 +124,13 @@ export const Footer: React.FC = () => {
                 <div className="text-xs uppercase text-green-700">
                   {t('Email', 'ኢሜይል')}
                 </div>
-                <div className="break-all">{CONTACT_INFO.email}</div>
+                <a
+                  href={`mailto:${CONTACT_INFO.email}`}
+                  className="break-all text-slate-800 hover:text-green-600 transition-colors inline-block focus:outline-none focus:underline"
+                  aria-label={`Email ${CONTACT_INFO.email}`}
+                >
+                  {CONTACT_INFO.email}
+                </a>
               </div>
 
               <div>
