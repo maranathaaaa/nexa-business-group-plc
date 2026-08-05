@@ -12,7 +12,6 @@ import {
 } from '../types';
 
 export const NAVIGATION_ITEMS: NavItem[] = [
-  { id: 'home', labelEn: 'Home', labelAm: 'ዋና ገጽ', href: '#home' },
   { id: 'about', labelEn: 'About Us', labelAm: 'ስለ እኛ', href: '#about' },
   { id: 'journey', labelEn: 'Journey', labelAm: 'የእኛ ጉዞ', href: '#journey' },
   { id: 'divisions', labelEn: 'Divisions', labelAm: 'የስራ ዘርፎች', href: '#divisions' },
