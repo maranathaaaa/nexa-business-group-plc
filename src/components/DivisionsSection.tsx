@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { CheckCircle2, Layers } from 'lucide-react';
+import React, { useState } from 'react';
+import { CheckCircle2, Layers, ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { DIVISIONS_DATA } from '../data/content';
 import { IconResolver } from './IconResolver';
@@ -19,6 +19,19 @@ const DIVISION_LOGO_PATHS: Record<string, string> = {
 
 export const DivisionsSection: React.FC = () => {
   const { language, t } = useLanguage();
+  const [expandedDivisions, setExpandedDivisions] = useState<Set<string>>(new Set());
+
+  const toggleDivision = (id: string) => {
+    setExpandedDivisions((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   return (
     <section
@@ -50,7 +63,7 @@ export const DivisionsSection: React.FC = () => {
         </div>
 
         {/* Division Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
           {DIVISIONS_DATA.map((division) => {
             const nameText =
               language === 'en' ? division.name : division.nameAm;
@@ -60,6 +73,7 @@ export const DivisionsSection: React.FC = () => {
               language === 'en' ? division.description : division.descriptionAm;
             const servicesList =
               language === 'en' ? division.services : division.servicesAm;
+            const isExpanded = expandedDivisions.has(division.id);
 
             return (
               <div
@@ -67,9 +81,9 @@ export const DivisionsSection: React.FC = () => {
                 key={division.id}
                 className="flex flex-col bg-white rounded-3xl border border-slate-200 shadow-md hover:shadow-xl transition-all p-7 sm:p-8 relative group overflow-hidden"
               >
-                {/* Accent colored top bar */}
+                {/* Accent colored top bar (only visible on hover) */}
                 <div
-                  className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${division.color}`}
+                  className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${division.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                 ></div>
 
                 {/* Card Header with Icon */}
@@ -103,23 +117,47 @@ export const DivisionsSection: React.FC = () => {
                   {descriptionText}
                 </p>
 
-                {/* Services List */}
-                <div className="mt-auto pt-5 border-t border-slate-100">
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                    {t('Key Capabilities:', 'ዋና ዋና አገልግሎቶች፦')}
-                  </div>
+                {/* Key Capabilities (hidden by default, expandable) */}
+                {isExpanded && (
+                  <div className="mt-auto pt-5 border-t border-slate-100">
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                      {t('Key Capabilities:', 'ዋና ዋና አገልግሎቶች፦')}
+                    </div>
 
-                  <ul className="space-y-2.5">
-                    {servicesList.map((service, sIdx) => (
-                      <li
-                        key={sIdx}
-                        className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-black"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-[#4CAF50] shrink-0" />
-                        <span>{service}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul className="space-y-2.5">
+                      {servicesList.map((service, sIdx) => (
+                        <li
+                          key={sIdx}
+                          className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-black"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-[#4CAF50] shrink-0" />
+                          <span>{service}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Show more / Show less toggle */}
+                <div className="mt-auto pt-5">
+                  <button
+                    type="button"
+                    onClick={() => toggleDivision(division.id)}
+                    aria-expanded={isExpanded}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-[#0D47A1] hover:bg-[#1565C0] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00BCD4]"
+                  >
+                    {isExpanded ? (
+                      <>
+                        {t('Show Less', 'ጨምረው ያሳዩ')}
+                        <ChevronUp className="w-4 h-4" />
+                      </>
+                    ) : (
+                      <>
+                        {t('Show More', 'ተጨማሪ ለማየት ይንኩ')}
+                        <ChevronDown className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             );
