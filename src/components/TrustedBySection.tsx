@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const trustedCompanyModules = import.meta.glob('../../assets/companies/*.{png,jpg,jpeg,jfif}', {
   eager: true,
@@ -15,11 +15,12 @@ const trustedCompanies = Object.entries(trustedCompanyModules)
   .sort((a, b) => a.name.localeCompare(b.name));
 
 export const TrustedBySection: React.FC = () => {
+  const [isPaused, setIsPaused] = useState(false);
+
   return (
-    <section aria-labelledby="trusted-by-heading" className="bg-slate-50 py-20">
+    <section aria-labelledby="trusted-by-heading" className="bg-slate-50 py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-        
           <h2 id="trusted-by-heading" className="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
             Companies we have worked with
           </h2>
@@ -27,18 +28,38 @@ export const TrustedBySection: React.FC = () => {
             Proud to have partnered with leading organizations across multiple industries.
           </p>
         </div>
+      </div>
 
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-          {trustedCompanies.map((company) => (
-            <div
-              key={company.name}
-              className="group flex items-center justify-center rounded-3xl border border-slate-200/80 bg-white p-4 transition-shadow duration-300 hover:shadow-xl"
-            >
-              <img
-                src={company.logo}
-                alt={`${company.name} logo`}
-                className="h-32 w-full max-h-36 object-contain transition duration-300 ease-in-out"
-              />
+      <div
+        className="mt-12"
+        onPointerDown={() => setIsPaused(true)}
+        onPointerUp={() => setIsPaused(false)}
+        onPointerLeave={() => setIsPaused(false)}
+        onPointerCancel={() => setIsPaused(false)}
+      >
+        <div
+          role="list"
+          aria-label="Trusted companies logo strip"
+          className="flex w-max"
+          style={{
+            animation: `marquee 45s linear infinite`,
+            animationPlayState: isPaused ? 'paused' : 'running',
+          }}
+        >
+          {[0, 1].map((copy) => (
+            <div key={copy} role="listitem" className="flex w-max items-center gap-6 pr-6">
+              {trustedCompanies.map((company) => (
+                <div
+                  key={`${copy}-${company.name}`}
+                  className="group flex h-28 w-40 sm:w-44 flex-shrink-0 items-center justify-center rounded-3xl border border-slate-200/80 bg-white p-4 transition-shadow duration-300 hover:shadow-xl"
+                >
+                  <img
+                    src={company.logo}
+                    alt={`${company.name} logo`}
+                    className="max-h-full w-full object-contain transition duration-300 ease-in-out"
+                  />
+                </div>
+              ))}
             </div>
           ))}
         </div>

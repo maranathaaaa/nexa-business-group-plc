@@ -47,6 +47,16 @@
   display: none;
 }
 
+/* Continuous auto-scrolling marquee (used by trusted companies strip) */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Accessibility font scale modifier classes */
 body.font-size-lg {
   font-size: 112.5%;
