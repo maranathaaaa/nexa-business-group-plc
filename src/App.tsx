@@ -17,6 +17,7 @@ import { WhyNexaSection } from './components/WhyNexaSection';
 import { PhilosophySection } from './components/PhilosophySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
 
 export default function App() {
   return (
@@ -60,6 +61,9 @@ export default function App() {
 
         {/* Footer */}
         <Footer />
+
+        {/* Floating Up-Arrow Button: scrolls back to Home */}
+        <ScrollToTopButton />
       </div>
     </LanguageProvider>
   );
