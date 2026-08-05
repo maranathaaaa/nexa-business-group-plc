@@ -107,15 +107,14 @@ export const HeroSection: React.FC = () => {
           {/* Right Column: Custom Modern Business & Corporate Buildings Illustration (No stock people) */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full max-w-lg lg:max-w-none">
-              {/* Decorative backdrop glow */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#0D47A1]/10 via-[#00BCD4]/20 to-transparent rounded-3xl transform rotate-1 scale-105"></div>
+              {/* Decorative backdrop glow removed per design request */}
 
               {/* Illustration Canvas */}
               <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 overflow-hidden">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-[#00BCD4]"></span>
-                    <span className="text-sm font-bold text-[#0D47A1]">
+                    <span className="text-sm font-bold text-[#0D47A1] no-hover-shadow">
                       {t('Nexa Integrated Ecosystem', 'ኔክሳ ተቀናጀ የንግድ ስርዓት')}
                     </span>
                   </div>

@@ -64,3 +64,13 @@ body.font-size-lg {
 body.font-size-xl {
   font-size: 125%;
 }
+
+/* Prevent any hover-applied shadows on the small ecosystem title */
+.no-hover-shadow,
+.no-hover-shadow:hover,
+.no-hover-shadow:focus {
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  text-shadow: none !important;
+}
