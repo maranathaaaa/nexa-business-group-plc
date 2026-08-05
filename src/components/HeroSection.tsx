@@ -20,8 +20,6 @@ export const HeroSection: React.FC = () => {
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gradient-to-br from-[#00BCD4]/10 to-[#0D47A1]/5 blur-3xl"></div>
         <div className="absolute top-1/2 -left-20 w-80 h-80 rounded-full bg-[#EAF6FF] blur-2xl"></div>
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0D47A108_1px,transparent_1px),linear-gradient(to_bottom,#0D47A108_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
