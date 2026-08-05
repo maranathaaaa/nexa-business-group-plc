@@ -72,8 +72,12 @@ export const ContactSection: React.FC = () => {
           template_id: templateId,
           user_id: userId,
           template_params: {
+            to_email: CONTACT_INFO.email,
+            to_name: CONTACT_INFO.companyNameEn,
             from_name: formData.name || 'Nexa Site',
             from_email: formData.email,
+            reply_to: formData.email,
+            subject: `Service Request: ${formData.service}`,
             phone: formData.phone,
             service: formData.service,
             message: formData.message,
