@@ -58,7 +58,7 @@ export const Navbar: React.FC = () => {
             {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-sm bg-[#EAF6FF] text-[#0D47A1] border border-[#00BCD4]/30 hover:bg-[#0D47A1] hover:text-white transition-all shadow-sm"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-sm bg-[#EAF6FF] text-[#0D47A1] border border-[#00BCD4]/30 hover:bg-[#0D47A1] hover:text-white transition-all"
               aria-label={
                 language === 'en'
                   ? 'Switch to Amharic Language'
