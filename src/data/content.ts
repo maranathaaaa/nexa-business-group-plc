@@ -18,7 +18,6 @@ export const NAVIGATION_ITEMS: NavItem[] = [
   { id: 'services', labelEn: 'Services', labelAm: 'አገልግሎቶች', href: '#services' },
   { id: 'whynexa', labelEn: 'Why Nexa', labelAm: 'ለምን ኔክሳ?', href: '#whynexa' },
   { id: 'philosophy', labelEn: 'Philosophy', labelAm: 'መርሃችን', href: '#philosophy' },
-  { id: 'contact', labelEn: 'Contact', labelAm: 'ያግኙን', href: '#contact' },
 ];
 
 export const TIMELINE_PHASES: TimelinePhase[] = [
