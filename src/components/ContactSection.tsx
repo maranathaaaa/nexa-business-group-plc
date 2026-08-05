@@ -33,6 +33,8 @@ export const ContactSection: React.FC = () => {
     service: 'Event Management & Brand Activation',
     message: '',
   });
+  const [isSending, setIsSending] = useState(false);
+  const [sendError, setSendError] = useState('');
 
   const companyName =
     language === 'en'
@@ -43,25 +45,53 @@ export const ContactSection: React.FC = () => {
   const hoursText =
     language === 'en' ? CONTACT_INFO.officeHoursEn : CONTACT_INFO.officeHoursAm;
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.email) return;
+    setSendError('');
+    if (!formData.email) return setSendError('Please enter your email address.');
 
-    const subject = encodeURIComponent(`Service Request: ${formData.service}`);
-    const body = encodeURIComponent(
-      [
-        `Name / Company: ${formData.name}`,
-        `Email: ${formData.email}`,
-        `Phone: ${formData.phone || 'Not provided'}`,
-        `Requested Service: ${formData.service}`,
-        '',
-        `Message:`,
-        formData.message || 'No additional message',
-      ].join('\n')
-    );
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const userId = import.meta.env.VITE_EMAILJS_USER_ID;
 
-    window.location.href = `mailto:${CONTACT_INFO.email}?subject=${subject}&body=${body}`;
-    setFormSubmitted(true);
+    if (!serviceId || !templateId || !userId) {
+      setSendError(
+        'Email service not configured. Set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_USER_ID in your .env file.'
+      );
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: serviceId,
+          template_id: templateId,
+          user_id: userId,
+          template_params: {
+            from_name: formData.name || 'Nexa Site',
+            from_email: formData.email,
+            phone: formData.phone,
+            service: formData.service,
+            message: formData.message,
+          },
+        }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'Email send failed');
+      }
+
+      setFormSubmitted(true);
+    } catch (err: any) {
+      setSendError(err?.message || 'Failed to send the message.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleResetForm = () => {
@@ -427,14 +457,24 @@ export const ContactSection: React.FC = () => {
                       className="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 focus:outline-none focus:border-[#0D47A1] focus:ring-2 focus:ring-[#EAF6FF] text-base font-medium text-slate-800 transition-all"
                     ></textarea>
                   </div>
+                  {sendError && (
+                    <div className="text-sm text-red-600">{sendError}</div>
+                  )}
 
                   <button
                     type="submit"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-bold text-base bg-[#0D47A1] hover:bg-[#1565C0] text-white shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-[#EAF6FF]"
+                    disabled={isSending}
+                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-bold text-base text-white shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-4 focus:ring-[#EAF6FF] ${
+                      isSending
+                        ? 'bg-slate-400 cursor-wait'
+                        : 'bg-[#0D47A1] hover:bg-[#1565C0]'
+                    }`}
                   >
                     <Send className="w-5 h-5 text-[#00BCD4]" />
                     <span>
-                      {t('Submit Service Request', 'የአገልግሎት ጥያቄውን በኢሜይል ይላኩ')}
+                      {isSending
+                        ? t('Sending...', 'በመላክ ላይ...')
+                        : t('Submit Service Request', 'የአገልግሎት ጥያቄውን በኢሜይል ይላኩ')}
                     </span>
                   </button>
                 </form>
