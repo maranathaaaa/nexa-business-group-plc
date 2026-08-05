@@ -111,7 +111,7 @@ export const HeroSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-tr from-[#0D47A1]/10 via-[#00BCD4]/20 to-transparent rounded-3xl transform rotate-1 scale-105"></div>
 
               {/* Illustration Canvas */}
-              <div className="relative bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 overflow-hidden">
+              <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 overflow-hidden">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-[#00BCD4]"></span>
