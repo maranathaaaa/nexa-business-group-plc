@@ -35,6 +35,9 @@ export const ContactSection: React.FC = () => {
   });
   const [isSending, setIsSending] = useState(false);
   const [sendError, setSendError] = useState('');
+  // Honeypot: real users never see or fill this. Web3Forms rejects the
+  // submission as spam when `botcheck` is truthy.
+  const [botcheck, setBotcheck] = useState(false);
 
   const companyName =
     language === 'en'
@@ -48,58 +51,121 @@ export const ContactSection: React.FC = () => {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSendError('');
-    if (!formData.email) return setSendError('Please enter your email address.');
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const phone = formData.phone.trim();
+    const message = formData.message.trim();
 
-    if (!serviceId || !templateId || !userId) {
+    if (!email) {
+      return setSendError(
+        t('Please enter your email address.', 'እባክዎ የኢሜይል አድራሻዎን ያስገቡ።')
+      );
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      return setSendError(
+        t(
+          'Please enter a valid email address.',
+          'እባክዎ ትክክለኛ የኢሜይል አድራሻ ያስገቡ።'
+        )
+      );
+    }
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    if (!accessKey) {
       setSendError(
-        'Email service not configured. Set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_USER_ID in your .env file.'
+        t(
+          'Email service not configured. Set VITE_WEB3FORMS_ACCESS_KEY in your .env file.',
+          'የኢሜይል አገልግሎቱ አልተዋቀረም። በ .env ፋይል ውስጥ VITE_WEB3FORMS_ACCESS_KEY ያስገቡ።'
+        )
       );
       return;
     }
 
     setIsSending(true);
 
+    // Don't let a hung network keep the button in its loading state forever.
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 20000);
+
     try {
-      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        signal: controller.signal,
         body: JSON.stringify({
-          service_id: serviceId,
-          template_id: templateId,
-          user_id: userId,
-          template_params: {
-            to_email: CONTACT_INFO.email,
-            to_name: CONTACT_INFO.companyNameEn,
-            from_name: formData.name || 'Nexa Site',
-            from_email: formData.email,
-            reply_to: formData.email,
-            subject: `Service Request: ${formData.service}`,
-            phone: formData.phone,
-            service: formData.service,
-            message: formData.message,
-          },
+          access_key: accessKey,
+          botcheck,
+          // Delivery target is NOT set here. Web3Forms always sends to the
+          // inbox this access key is registered to in the Web3Forms
+          // dashboard, which must be CONTACT_INFO.email
+          // (info@nexabusinessgroup.com).
+          subject: `New Service Request — ${formData.service} — ${
+            name || 'Website Visitor'
+          }`,
+          from_name: name || 'Nexa Website Visitor',
+          // Makes "Reply" in Outlook go straight back to the visitor.
+          replyto: email,
+
+          // Ordered, human-readable fields. Web3Forms renders each key as a
+          // labelled row, so these become the structure of the email body.
+          'Full Name / Company': name || '—',
+          'Email Address': email,
+          'Phone Number': phone || '—',
+          'Requested Service / Division': formData.service,
+          Message: message || '—',
+          'Preferred Language': language === 'en' ? 'English' : 'Amharic',
+          'Submitted At': new Date().toLocaleString('en-GB', {
+            timeZone: 'Africa/Addis_Ababa',
+            dateStyle: 'full',
+            timeStyle: 'short',
+          }),
+          'Submitted From': window.location.href,
         }),
       });
 
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || 'Email send failed');
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || !data?.success) {
+        throw new Error(
+          data?.message ||
+            t(
+              'Failed to send the message. Please try again.',
+              'መልእክቱን መላክ አልተቻለም። እባክዎ እንደገና ይሞክሩ።'
+            )
+        );
       }
 
       setFormSubmitted(true);
     } catch (err: any) {
-      setSendError(err?.message || 'Failed to send the message.');
+      const aborted = err?.name === 'AbortError';
+      setSendError(
+        aborted
+          ? t(
+              'The request timed out. Please check your connection and try again.',
+              'ጥያቄው ጊዜው አልፎበታል። እባክዎ ኢንተርኔትዎን አረጋግጠው እንደገና ይሞክሩ።'
+            )
+          : err?.message ||
+              t(
+                'Failed to send the message. Please try again.',
+                'መልእክቱን መላክ አልተቻለም። እባክዎ እንደገና ይሞክሩ።'
+              )
+      );
     } finally {
+      window.clearTimeout(timeout);
       setIsSending(false);
     }
   };
 
   const handleResetForm = () => {
     setFormSubmitted(false);
+    setSendError('');
+    setBotcheck(false);
     setFormData({
       name: '',
       email: '',
@@ -322,6 +388,18 @@ export const ContactSection: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit} className="space-y-4">
+                  {/* Honeypot — hidden from users, harvested by bots. */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    checked={botcheck}
+                    onChange={(e) => setBotcheck(e.target.checked)}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Full Name */}
                     <div>
