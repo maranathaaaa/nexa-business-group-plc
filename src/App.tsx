@@ -18,10 +18,12 @@ import { PhilosophySection } from './components/PhilosophySection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { Analytics } from "@vercel/analytics/next"
 
 export default function App() {
   return (
     <LanguageProvider>
+      <Analytics />
       <div className="min-h-screen flex flex-col bg-white text-slate-800 selection:bg-[#EAF6FF] selection:text-[#0D47A1]">
         {/* Sticky Navigation Bar with Bilingual Switcher & Text Size Accessibility */}
         <Navbar />
