@@ -42,7 +42,7 @@ export const TrustedBySection: React.FC = () => {
           aria-label="Trusted companies logo strip"
           className="flex w-max"
           style={{
-            animation: `marquee 45s linear infinite`,
+            animation: `marquee 80s linear infinite`,
             animationPlayState: isPaused ? 'paused' : 'running',
           }}
         >
